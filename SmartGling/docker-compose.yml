@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+
+  app:
+    build: ./app
+    depends_on:
+      - redis
+    ports:
+      - "9530:9527"
+
+  nginx:
+    build: ./nginx
+    depends_on:
+      - app
+
+  ats:
+    build: ./ATS
+    ports:
+      - "9999:8080"
+    depends_on:
+      - nginx
